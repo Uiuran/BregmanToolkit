@@ -352,9 +352,9 @@ class Features(object):
         if self._cqtN<1: print "warning: cqtN not positive definite"
         mxnorm = P.empty(int(self._cqtN)) # Normalization coefficients        
         fftfrqs = self._fftfrqs #P.array([i * self.sample_rate / float(self._fftN) for i in P.arange(self._outN)])
-        logfrqs=P.array([lo_edge * P.exp(P.log(2.0)*i/bpo) for i in P.arange(self._cqtN)])
+        logfrqs=P.array([lo_edge * P.exp(P.log(2.0)*i/bpo) for i in P.arange(int(self._cqtN))])
         logfbws=P.array([max(logfrqs[i] * (f_ratio - 1.0), self.sample_rate / float(self._fftN)) 
-                         for i in P.arange(self._cqtN)])
+                         for i in P.arange(int(self._cqtN))])
         #self._fftfrqs = fftfrqs
         self._logfrqs = logfrqs
         self._logfbws = logfbws
@@ -388,10 +388,10 @@ class Features(object):
         DCT_OFFSET = self.lcoef
         nm = 1 / P.sqrt( self._cqtN / 2.0 )
         self.DCT = P.empty( ( int(self._dctN), int(self._cqtN) ))
-        for i in P.arange(self._dctN):
-          for j in P.arange(self._cqtN):
+        for i in P.arange(int(self._dctN)):
+          for j in P.arange(int(self._cqtN)):
             self.DCT[ i, j ] = nm * P.cos( i * (2 * j + 1) * (P.pi / 2.0) / self._cqtN  )
-        for j in P.arange(self._cqtN):
+        for j in P.arange(int(self._cqtN)):
             self.DCT[ 0, j ] *= P.sqrt(2.0) / 2.0
 
     def _shift_insert(self,x, nex, hop):
