@@ -387,7 +387,7 @@ class Features(object):
         """
         DCT_OFFSET = self.lcoef
         nm = 1 / P.sqrt( self._cqtN / 2.0 )
-        self.DCT = P.empty((self._dctN, self._cqtN))
+        self.DCT = P.empty( ( int(self._dctN), int(self._cqtN) ))
         for i in P.arange(self._dctN):
           for j in P.arange(self._cqtN):
             self.DCT[ i, j ] = nm * P.cos( i * (2 * j + 1) * (P.pi / 2.0) / self._cqtN  )
